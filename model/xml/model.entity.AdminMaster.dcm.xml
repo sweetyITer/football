@@ -80,20 +80,20 @@
         <option name="default"/>
       </options>
     </field>
-    <field name="from" type="string" column="from" length="50" nullable="false">
+    <field name="from" type="string" column="`from`" length="50" nullable="false">
       <options>
         <option name="fixed"/>
         <option name="comment">来源</option>
         <option name="default"/>
       </options>
     </field>
-    <field name="isLock" type="boolean" column="is_lock" nullable="false">
+    <field name="isLock" type="integer" column="is_lock" nullable="false">
       <options>
         <option name="comment">状态 0 ：正常 1：锁定</option>
         <option name="default">1</option>
       </options>
     </field>
-    <field name="updateTime" type="datetime" column="update_time" nullable="false">
+    <field name="updateTime" type="string" column="update_time" nullable="false">
       <options>
         <option name="comment">更新时间</option>
         <option name="default">CURRENT_TIMESTAMP</option>

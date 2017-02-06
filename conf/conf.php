@@ -57,12 +57,12 @@ return [
     'cache' => [
         'type'    => 'complex',
         'default' => [
-            'type'    => 'Memcached',
-            'host'    => '127.0.0.1',
-            'port'    => 11311,
+            'type'    => 'Redis',
+            'host'    => 'redis',
+            'port'    => 6379,
             'expire'  => 0,
             'timeout' => 5, // 超时时间（单位：毫秒）
-            'prefix'  => '',
+            'prefix'  => 'football_',
         ],
 
     ],

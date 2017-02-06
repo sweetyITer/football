@@ -1,0 +1,44 @@
+<div class="ui modal" ui-modal on-hide="onHide()">
+    <i class="close icon"></i>
+    <div class="header">
+        定时任务状态
+    </div>
+    <div class="content">
+        <div style="height: 500px;overflow-y: auto" ng-class="{loading:load_data}" class="ui segment">
+            <table class="table celled striped  ui">
+                <thead>
+                <tr>
+                    <th width="50">pid</th>
+                    <th width="100">类型</th>
+                    <th>描述</th>
+                    <th width="200">时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="v in list">
+                    <td>{{v.pid}}</td>
+                    <td>{{v.label}}</td>
+                    <td>
+                        <p style="width: 380px; word-break: keep-all;">
+                            {{v.text}}
+                        </p>
+                    </td>
+                    <td>{{v.add_time | date2str}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui blue button" ng-click="clear()">
+            清除日志
+        </div>
+        <div class="ui black button" ng-click="loadData()">
+            刷新
+        </div>
+        <div class="ui positive labeled icon button right">
+            确认
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>

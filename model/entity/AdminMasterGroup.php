@@ -1,11 +1,12 @@
 <?php
-
 namespace model\entity;
+
+use mmapi\core\Model;
 
 /**
  * AdminMasterGroup
  */
-class AdminMasterGroup
+class AdminMasterGroup extends Model
 {
     /**
      * @var string
@@ -16,7 +17,6 @@ class AdminMasterGroup
      * @var integer
      */
     private $id;
-
 
     /**
      * Set name

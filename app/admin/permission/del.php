@@ -14,24 +14,30 @@ use mmapi\core\AppException;
 use mmapi\core\Db;
 use model\entity\AdminPermission;
 
-class DelAjax extends AdminApi
+class Del extends AdminApi
 {
-    protected $id;//导航id
 
+    /**
+     * init
+     * @author yuqi
+     */
     protected function init()
     {
         $this->addParam('id')->setType(ApiParams::TYPE_INT);
     }
 
+    /**
+     * run
+     * @author yuqi
+     * @throws AppException
+     */
     public function run()
     {
         /** @var AdminPermission $adminPermission */
         $adminPermission = AdminPermission::getInstance($this->id);
         if (is_null($adminPermission)) {
-            throw new AppException("该权限不存在", "NAV_NOT_EXIST");
+            throw new AppException("该权限不存在", "161636");
         }
         $adminPermission->remove();
     }
-
 }
-

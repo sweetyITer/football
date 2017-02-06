@@ -4,7 +4,6 @@ namespace model\entity;
 
 use library\extend\Aes;
 use mmapi\core\Config;
-use mmapi\core\Db;
 use mmapi\core\Model;
 
 /**
@@ -75,10 +74,10 @@ class AdminMaster extends Model
     /**
      * @var boolean
      */
-    private $isLock = '1';
+    private $isLock = '0';
 
     /**
-     * @var \DateTime
+     * @var string
      */
     private $updateTime = 'CURRENT_TIMESTAMP';
 
@@ -96,6 +95,16 @@ class AdminMaster extends Model
      * @var \model\entity\AdminMasterGroup
      */
     private $group;
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->setUpdateTime(date('Y-m-d H:i:s'));
+        $this->setLastLoginTime(date('Y-m-d H:i:s'));
+        $this->setAddTime(date('Y-m-d H:i:s'));
+    }
 
     /**
      * Set email
@@ -389,6 +398,30 @@ class AdminMaster extends Model
     }
 
     /**
+     * Set IsLock
+     *
+     * @param integer $isLock
+     *
+     * @return AdminMaster
+     */
+    public function setIsLock($isLock)
+    {
+        $this->isLock = $isLock;
+
+        return $this;
+    }
+
+    /**
+     * Get IsLock
+     *
+     * @return integer
+     */
+    public function getIsLock()
+    {
+        return $this->isLock;
+    }
+
+    /**
      * Set isLock
      *
      * @return AdminMaster
@@ -425,7 +458,7 @@ class AdminMaster extends Model
     /**
      * Set updateTime
      *
-     * @param \DateTime $updateTime
+     * @param string $updateTime 更新时间
      *
      * @return AdminMaster
      */
@@ -439,7 +472,7 @@ class AdminMaster extends Model
     /**
      * Get updateTime
      *
-     * @return \DateTime
+     * @return string
      */
     public function getUpdateTime()
     {
@@ -528,7 +561,7 @@ class AdminMaster extends Model
      *
      * @return string
      */
-    static private function encodePasswd($passwd, $salt)
+    static public function encodePasswd($passwd, $salt)
     {
         return md5(md5($passwd) . md5($salt));
     }
@@ -560,6 +593,22 @@ class AdminMaster extends Model
             ->setIp($this->lastLoginIp)
             ->save();
         setcookie(Config::get('auth.name'), $P00001, $lifetime, '/', Config::get('auth.domain'));
+    }
+
+    /**
+     * @desc   createSalt 创建盐值
+     * @author yuqi
+     * @return string
+     */
+    static public function createSalt()
+    {
+        $str  = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+        $salt = '';
+        for ($i = 1; $i <= 6; $i++) {
+            $salt .= $str[mt_rand(0, 35)];
+        }
+
+        return $salt;
     }
 
 }

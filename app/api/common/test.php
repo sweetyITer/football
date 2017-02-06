@@ -9,6 +9,7 @@
 namespace app\api\common;
 
 use app\AppApi;
+use mmapi\api\DenyResubmitApi;
 use mmapi\core\Api;
 use mmapi\core\Config;
 use mmapi\core\Db;
@@ -17,11 +18,10 @@ use model\entity\Post;
 use model\entity\Quan;
 use model\entity\User;
 
-class test extends AppApi
+class test extends DenyResubmitApi
 {
     protected function init()
     {
-        $this->get('auth')->setRequire(false);
     }
 
     public function run()

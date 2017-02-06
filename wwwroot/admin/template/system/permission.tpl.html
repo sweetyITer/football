@@ -2,59 +2,70 @@
     <li><a href="#">系统</a></li>
     <li class="active"><a href="#">权限列表</a></li>
 </ol>
-
-<div class="ui pointing secondary menu">
-    <a class="item" ng-class="{active:g.id==activeGroup.id}" ng-repeat="g in glist" ng-click="$parent.activeGroup=g;">{{g.text}}</a>
-    <div class="right menu">
-        <a class="ui item " ng-click="add({model:activeGroup.model})">
-            <i class="ui icon add circle green"></i>添加
-        </a>
-    </div>
-</div>
-<div class="ui tab active" ng-class="{loading:!activeGroup.ready}">
-    <table class="ui table">
-        <thead>
-        <tr>
-            <th width="100">ID</th>
-            <th width="100">模块</th>
-            <th width="100">操作</th>
-            <th>描述</th>
-            <th width="80">状态</th>
-            <th width="280">操作</th>
-        </tr>
-        </thead>
+<ul id="myTab" class="nav nav-tabs" role="tablist">
+    <li ng-class="{active:g.id==$parent.activeGroup.id}" ng-repeat="g in glist" ng-click="$parent.activeGroup=g;">
+        <a class="item" href="#">{{g.text}} </a>
+    </li>
+    <li role="presentation" class="dropdown  pull-right">
+        <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents"
+           aria-expanded="false">选项 <span class="caret"></span></a>
+        <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
+            <li>
+                <a class="ui item " ng-click="add({pid:$parent.activeGroup.id}, parent_nav)">
+                    <span class="glyphicon glyphicon-plus text-success"></span> 添加
+                </a>
+            </li>
+            <li>
+                <a class="ui item " ng-click="remove(activeGroup.id)">
+                    <span class="glyphicon glyphicon-trash text-danger"></span> 删除
+                </a>
+            </li>
+            <li>
+                <a class="ui item " ng-click="add(activeGroup, parent_nav)">
+                    <span class="glyphicon glyphicon-edit text-info"></span> 修改
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+<br>
+<div class="tab-contents">
+    <table class="table  table-striped table-hover">
         <tbody>
-        <tr ng-if="activeGroup.list.length<=1">
+        <tr ng-if="activeGroup.children.length<=0">
             <td colspan="10">
                 空空如也..
             </td>
         </tr>
         <tr ng-repeat="v in activeGroup.list" ng-if="v.action!='*'">
-            <td>{{v.id}}</td>
-            <td>{{v.model}}</td>
-            <td>{{v.action}}</td>
-            <td>{{v.text}}</td>
             <td>
+                <span class="label label-default">
+                    {{v.id}}
+                </span>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                {{v.text}}
+            </td>
+            <td width="50">
                 <ng-switch on="v.status">
-                    <i class="icon ui checkmark green" ng-switch-when="1"></i>
-                    <i class="icon ui remove red" ng-switch-when="0"></i>
+                    <i class="glyphicon glyphicon-check text-success" ng-switch-when="1" title="正常"></i>
+                    <i class="glyphicon glyphicon-remove text-danger" ng-switch-when="0" title="已经锁定"> </i>
                 </ng-switch>
             </td>
-            <td>
-                <button class="ui mini button green" ng-click="add(v)">
-                    <i class="ui icon edit"></i> 修改
+            <td width="250">
+                <button class="btn btn-success" ng-click="add(v, parent_nav)">
+                    <i class="glyphicon glyphicon-edit"></i> 修改
                 </button>
-                <button class="ui mini button red" ng-click="remove(v)">
-                    <i class="ui icon trash"></i> 删除
-                </button>
-                <button class="ui mini button blue" ng-click="show(v.id)">
-                    <i class="ui icon user"></i> 员工
+                <button class="btn btn-danger" ng-click="remove(v.id)">
+                    <i class="glyphicon glyphicon-trash"></i> 删除
                 </button>
             </td>
-        </tr>
-        <tr ng-if="activeGroup.list.length==0">
-            <td colspan="6">空空如也</td>
         </tr>
         </tbody>
     </table>
+    <div class="mbox" ng-show="!activeGroup.list">
+        <dl class="last">
+            <dt>空空如也..</dt>
+        </dl>
+    </div>
 </div>
+

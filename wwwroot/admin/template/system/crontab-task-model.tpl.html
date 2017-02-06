@@ -1,0 +1,45 @@
+<div class="ui small modal" ui-modal on-approve="submit();">
+    <i class="close icon"></i>
+    <div class="header">
+        {{action_text}}
+    </div>
+    <div class="content">
+        <div class="ui form">
+            <div class="field required">
+                <label for="">任务名称</label>
+                <input type="text" ng-model="data.name">
+            </div>
+            <div class="field required">
+                <label for="">时间格式</label>
+                <input type="text" ng-model="data.crontab_str">
+            </div>
+            <div class="field required">
+                <label for="">命令</label>
+                <input type="text" ng-model="data.command">
+            </div>
+            <div class="field">
+                <label for="">参数</label>
+                <input type="text" ng-model="data.query" placeholder="例如： id=1 name=111">
+            </div>
+
+            <div class="field">
+                <label for="">描述</label>
+                <input type="text" ng-model="data.remark" placeholder="任务描述">
+            </div>
+            <div class="type">
+                <label for="">任务类型</label>
+                <input type="text" ng-model="data.type" placeholder="任务类型">
+            </div>
+        </div>
+
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            取消
+        </div>
+        <div class="ui positive labeled icon button right" ng-class="{loading:is_submit}">
+            确认
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>

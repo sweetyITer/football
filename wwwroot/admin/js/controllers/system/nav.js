@@ -27,10 +27,10 @@ define(['application', 'angular'], function (application, angular) {
             $scope.parentNav = parent_nav;
             $('body').append($compile('<nav-model data="editModel" data1="parentNav"></nav-model>')($scope));
         };
-        $scope.remove = function (v) {
-            $('body').append($compile('<ui-confirm data-title="确定要删除么？" on-approve="delete(' + v.id + ')"></ui-confirm>')($scope));
-        };
-        $scope.delete = function (id) {
+        $scope.remove = function (id) {
+            if (!confirm("确认删除？")) {
+                return false;
+            }
             $http.post(CONF.url('nav/del'), {id: id})
                 .success(function (json) {
                     dealJson(json, function (json) {

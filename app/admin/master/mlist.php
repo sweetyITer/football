@@ -12,7 +12,7 @@ use app\AdminApi;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use model\entity\AdminMaster;
 
-class mlist extends AdminApi
+class mList extends AdminApi
 {
     protected $page;
     protected $size = 20;
@@ -22,9 +22,14 @@ class mlist extends AdminApi
         $this->addParam('page')->setRequire(false)->setDefault(1)->setType(self::TYPE_INT);
     }
 
+    /**
+     * run
+     *
+     * @author yuqi
+     */
     public function run()
     {
-        $this->page = min(1, $this->page);
+        $this->page = max(1, $this->page);
         $query      = $this->db->dqlBuilder()
             ->select('g')
             ->from(AdminMaster::class, 'g')
@@ -32,7 +37,6 @@ class mlist extends AdminApi
             ->getQuery()
             ->setFirstResult(($this->page - 1) * $this->size)
             ->setMaxResults($this->size);
-
         $paginator = new Paginator($query, true);
 
         $list = [];
@@ -40,7 +44,9 @@ class mlist extends AdminApi
         foreach ($paginator as $item) {
             $list[] = [
                 'id'            => $item->getId(),
+                'groupId'       => $item->getGroup()->getId(),
                 'groupName'     => $item->getGroup()->getName(),
+                'email'         => $item->getEmail(),
                 'phone'         => $item->getPhone(),
                 'userFace'      => $item->getUserFace(),
                 'userName'      => $item->getUserName(),

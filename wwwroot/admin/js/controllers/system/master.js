@@ -1,19 +1,26 @@
 /**
  * Created by chenmingming on 2016/8/7.
  */
-define(['application','dire/pagination'], function (application) {
+define(['application', 'dire/pagination', 'fileinput', 'ajax-bootstrap-select'], function (application) {
     application.controller('system-master', ['$scope', '$http', '$compile', function ($scope, $http, $compile) {
-        $scope.$state.actName = 'system/master';
 
         //分页配置
         $scope.pageConfig = {
             key: 'master-list',
             pagevar: 'page',
-            listrows: '10'
+            listrows: '20'
         };
-
+        var loadDataGroup = function () {
+            $http.post(CONF.url('master/groupList'), {search: 'all'})
+                .success(function (json) {
+                    dealJson(json, function (json) {
+                        $scope.groupList = json.data;
+                    })
+                });
+        };
+        loadDataGroup();
         var loadData = function () {
-            $http.post(CONF.url('master/mlist'), {page: $scope.$stateParams.p})
+            $http.post(CONF.url('master/mList'), {page: $scope.$stateParams.page})
                 .success(function (json) {
                     dealJson(json, function (json) {
                         $scope.list = json.data.list;
@@ -26,27 +33,36 @@ define(['application','dire/pagination'], function (application) {
         });
         loadData();
 
+        $scope.fileinputConfig = {
+            uploadUrl: CONF.url('common/uploadimg') + '?dir=goods',
+            allowedFileExtensions: ['jpg', 'png', 'gif', 'bmp'],
+            maxFileSize: 2000000,
+            maxFilesNum: 2
+        };
+
         //添加
         $scope.add = function (model) {
             $scope.editModel = model;
-            $('body').append($compile('<master-model data="editModel" load-data="loadData()"></master-model>')($scope));
+            $('body').append($compile('<master-model data="editModel" group-list="groupList" fileinput-config="fileinputConfig" load-data="loadData()"></master-model>')($scope));
         };
 
         //修改
         $scope.update = function (model) {
             $scope.editModel = model;
-            $('body').append($compile('<master-update-model data="editModel" load-data="loadData()"></master-update-model>')($scope));
+            $('body').append($compile('<master-model data="editModel" group-list="groupList" fileinput-config="fileinputConfig" load-data="loadData()"></master-model>')($scope));
         };
 
-        //删除提示
-        $scope.remove = function (v) {
-            $('body').append($compile('<ui-confirm data-title="确定要删除么？" on-approve="delete(' + v.id + ')"></ui-confirm>')($scope));
-        };
         //删除页
-        $scope.delete = function (id) {
+        $scope.remove = function (id) {
+            if (!confirm("确认删除？")) {
+                return false;
+            }
             $http.post(CONF.url('master/del'), {id: id})
                 .success(function (json) {
-                    dealJson(json, $scope.loadData);
+                    dealJson(json, function (json) {
+                        tip('ok');
+                        loadData();
+                    });
                 })
         };
     }])
@@ -56,55 +72,38 @@ define(['application','dire/pagination'], function (application) {
                 replace: true,
                 scope: {
                     data: '=',
-                    loadData: '&'
+                    loadData: '&',
+                    fileinputConfig: '=',
+                    groupList: "="
                 },
                 templateUrl: CONF.tpl('system/master-model'),
                 link: function ($scope, elem, link) {
-                    $scope.submit = function () {
-                        $scope.is_submit = true;
-                        var data = {
-                            'email': $scope.data.email,
-                            'phone': $scope.data.phone,
-                            'user_face': $scope.data.user_face,
-                            'user_name': $scope.data.user_name,
-                            'nick_name': $scope.data.nick_name,
-                            'password': $scope.data.password
-                        };
-                        $http.post(CONF.url('master/add'), data)
-                            .success(function (json) {
-                                dealJson(json, function (json) {
-                                    $scope.loadData();
-                                });
-                            })
+                    $scope.changeStatus = function (data) {
+                        if (data.isLock == '1') {
+                            data.isLock = '0';
+                        } else {
+                            data.isLock = '1';
+                        }
                     };
-
-                    $scope.imgParams = {dir: 'admin'};
-                }
-            };
-        }])
-
-        .directive('masterUpdateModel', ['$http', function ($http) {
-            return {
-                restrict: 'E',
-                replace: true,
-                scope: {
-                    data: '=',
-                    loadData: '&'
-                },
-                templateUrl: CONF.tpl('system/master-update-model'),
-                link: function ($scope, elem, link) {
                     $scope.submit = function () {
                         $scope.is_submit = true;
                         var data = {
                             'id': $scope.data.id,
-                            'user_face': $scope.data.user_face,
-                            'nick_name': $scope.data.nick_name,
-                            'is_lock': $scope.data.is_lock
+                            'email': $scope.data.email,
+                            'phone': $scope.data.phone,
+                            'user_face': $scope.data.userFace,
+                            'nick_name': $scope.data.nickName,
+                            'password': $scope.data.password,
+                            'group_id': $scope.data.groupId,
+                            'is_lock': $scope.data.isLock || 0,
+                            'user_name': $scope.data.userName
                         };
-                        $http.post(CONF.url('master/update'), data)
+                        $http.post(CONF.url('master/add'), data)
                             .success(function (json) {
                                 dealJson(json, function (json) {
-                                    $scope.loadData();
+                                    tip('ok');
+                                    $(elem).modal('hide');
+                                    $scope.$emit('reload-page-data');
                                 });
                             })
                     };

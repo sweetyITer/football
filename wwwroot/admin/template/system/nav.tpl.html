@@ -7,7 +7,8 @@
         <a class="item" href="#">{{g.text}} </a>
     </li>
     <li role="presentation" class="dropdown  pull-right">
-        <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">选项 <span class="caret"></span></a>
+        <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents"
+           aria-expanded="false">选项 <span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
             <li>
                 <a class="ui item " ng-click="add({pid:$parent.activeGroup.id}, parent_nav)">
@@ -16,12 +17,12 @@
             </li>
             <li>
                 <a class="ui item " ng-click="remove(activeGroup)">
-                   <span class="glyphicon glyphicon-trash text-danger"></span> 删除
+                    <span class="glyphicon glyphicon-trash text-danger"></span> 删除
                 </a>
             </li>
             <li>
                 <a class="ui item " ng-click="add(activeGroup, parent_nav)">
-                  <span class="glyphicon glyphicon-edit text-info"></span> 修改
+                    <span class="glyphicon glyphicon-edit text-info"></span> 修改
                 </a>
             </li>
         </ul>
@@ -37,7 +38,7 @@
             </td>
         </tr>
         <tr ng-repeat="v in activeGroup.children" ng-if="v.action!='*'">
-            <td >
+            <td>
                 <span class="label label-default">
                     {{v.id}}
                 </span>
@@ -54,11 +55,16 @@
                 <button class="btn btn-success" ng-click="add(v, parent_nav)">
                     <i class="glyphicon glyphicon-edit"></i> 修改
                 </button>
-                <button class="btn btn-danger" ng-click="remove(v)">
+                <button class="btn btn-danger" ng-click="remove(v.id)">
                     <i class="glyphicon glyphicon-trash"></i> 删除
                 </button>
             </td>
         </tr>
         </tbody>
     </table>
+    <div class="mbox" ng-show="!activeGroup.children">
+        <dl class="last">
+            <dt>空空如也..</dt>
+        </dl>
+    </div>
 </div>

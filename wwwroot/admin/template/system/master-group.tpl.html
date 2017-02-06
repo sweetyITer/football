@@ -4,18 +4,18 @@
 </ol>
 
 <ul id="myTab" class="nav nav-tabs" role="tablist">
-    <li class="active">
-        <a class="item" href="#">管理员 </a>
-    </li>
     <li>
-        <a class="item" href="#" ui-sref="system/master-group">分组 </a>
+        <a class="item" href="#" ui-sref="system/master">管理员 </a>
+    </li>
+    <li class="active">
+        <a class="item" href="#">分组 </a>
     </li>
     <li role="presentation" class="dropdown  pull-right">
         <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents"
            aria-expanded="false">选项 <span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
             <li>
-                <a class="ui item " ng-click="add({pid:$parent.activeGroup.id}, parent_nav)">
+                <a class="ui item " ng-click="add()">
                     <span class="glyphicon glyphicon-plus text-success"></span> 添加
                 </a>
             </li>
@@ -26,15 +26,13 @@
 <table class="table-bordered table">
     <thead>
     <tr>
-        <th class="text-center">账号</th>
-        <th class="text-center" width="200">手机号码</th>
-        <th class="text-center" width="200">最后登录</th>
-        <th class="text-center" width="100">状态</th>
+        <th class="text-center" width="200">id</th>
+        <th class="text-center" width="200">名称</th>
         <th class="text-center" width="200">操作</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-if="list.length==0">
+    <tr ng-if="!list">
         <td colspan="10">
             空空如也..
         </td>
@@ -42,16 +40,8 @@
     <tr ng-repeat="v in list">
         <td>
             <span class="label label-default">{{v.id}}</span>
-            {{v.userName}} - {{v.nickName}}
         </td>
-        <td>{{v.phone|default:'-'}}</td>
-        <td>{{v.lastLoginTime |date2str}}</td>
-        <td class="text-center">
-            <ng-switch on="v.isLock">
-                <i class="glyphicon glyphicon-check text-success" ng-switch-when="false"></i>
-                <i class="glyphicon glyphicon-lock text-danger" ng-switch-when="true"></i>
-            </ng-switch>
-        </td>
+        <td>{{v.name}}</td>
         <td>
             <a href="javascript:;" ng-click="update(v)">
                 <i class="ui icon edit"></i>修改
@@ -64,4 +54,4 @@
     </tr>
     </tbody>
 </table>
-<pagination config="pageConfig" total="totalCount"></pagination>
+<pagination config="page_config" total="total_count"></pagination>

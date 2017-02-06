@@ -1,0 +1,82 @@
+<div class="ui breadcrumb">
+    <a class="section">系统</a>
+    <div class="divider"> /</div>
+    <a class="section">计划任务</a>
+</div>
+<div class="ui pointing secondary menu">
+    <div class="right menu">
+        <a class="ui item" ng-click="startMain()" ng-if="!status">
+            <i class="play icon green"></i>
+            开始
+        </a>
+        <a class="ui item " ng-click="stopMain()" ng-if="status">
+            <i class="pause icon red"></i>
+            暂停所有
+        </a>
+
+        <a class="ui item " ng-click="add()">
+            <i class="ui icon add circle green"></i>添加
+        </a>
+
+        <a class="ui item " ng-click="stat()">
+            <i class="ui icon line chart  red"></i>状态
+        </a>
+    </div>
+</div>
+<table class="ui table">
+    <thead>
+    <tr>
+        <th width="250">id</th>
+        <th width="150">计划配置</th>
+        <th width="50">分类</th>
+        <th width="200">命令</th>
+        <th>描述</th>
+
+        <th width="200">上次执行</th>
+        <th width="50">次数</th>
+        <th width="50">状态</th>
+        <th width="250">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-if="list.length==0">
+        <td colspan="10">
+            空空如也..
+        </td>
+    </tr>
+    <tr ng-repeat="v in list">
+        <td>
+            <a class="ui label ribbon">
+                {{v.id}}
+            </a>
+            {{v.name}}
+        </td>
+        <td>{{v.crontab_str}}</td>
+        <td>{{v.type}}</td>
+        <td>{{v.command}} {{v.query}}</td>
+        <td>{{v.remark|default:'-'}}</td>
+
+        <td>{{v.last_time|date2str}}</td>
+        <td>{{v.run_count}}</td>
+        <td>
+            <ng-switch on="v.status">
+                <i class="icon ui wait green" ng-switch-when="wait" title="等待中"></i>
+                <i class="icon ui refresh yellow" ng-switch-when="run" title="执行中"></i>
+                <i class="icon ui pause circle red" ng-switch-when="stop" title="暂停中"></i>
+            </ng-switch>
+        </td>
+        <td>
+            <a href="javascript:;" ng-click="add(v)">
+                <i class="ui icon edit"></i>修改
+            </a>
+            |
+            <a href="javascript:;" ng-click="stop(v.id)" ng-if="v.status=='wait'">
+                <i class="ui icon pause red"></i>暂停
+            </a>
+            <a href="javascript:;" ng-click="start(v.id)" ng-if="v.status!='wait'">
+                <i class="ui icon pause green"></i>开始
+            </a>
+        </td>
+    </tr>
+    </tbody>
+</table>

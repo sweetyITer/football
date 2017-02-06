@@ -1,40 +1,52 @@
-<div class="ui modal" ui-modal on-approve="submit();">
-    <i class="close icon"></i>
-    <div class="header">
-        {{action_text}}
-    </div>
-    <div class="content">
-        <div class="ui form">
-            <div class="ui field">
-                <label for="">模块</label>
-                <input type="text" ng-model="data.model">
-                <input type="hidden" ng-model="data.id">
+<div class="modal fade" modal-dialog>
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title"> {{action_text}}</h4>
             </div>
-            <div class="ui field">
-                <label for="">操作</label>
-                <input type="text" ng-model="data.action">
-            </div>
-            <div class="ui field">
-                <label for="">描述</label>
-                <input type="text" ng-model="data.text">
-            </div>
-            <div class="ui field">
-                <label for="">状态</label>
-                <div class="ui slider checkbox green" ui-checkbox="" on-checked="data.status=1"
-                     on-unchecked="data.status=0" checked="data.status==1">
-                    <input type="checkbox">
-                    <label for="">开启/关闭</label>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">模块</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="data.model" class="form-control">
+                            <input type="hidden" ng-model="data.id" class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">操作</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="data.action" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">描述</label>
+                        <div class="col-sm-10">
+                            <input type="text" ng-model="data.text" class="form-control">
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="" class="col-sm-2 control-label">状态</label>
+                        <div class="col-sm-10">
+                            <label for="" class="checkbox-inline" ng-click="changeStatus(data);">
+                                <input type="checkbox" ng-checked="data.status=='1'">
+                                开启/关闭
+                            </label>
+                        </div>
+
+
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="actions">
-        <div class="ui black deny button">
-            取消
-        </div>
-        <div class="ui positive labeled icon button right" ng-class="{loading:is_submit}">
-            确认
-            <i class="checkmark icon"></i>
-        </div>
-    </div>
-</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="submit();" ng-class="{loading:is_submit}">提交
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

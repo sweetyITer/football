@@ -5,7 +5,7 @@ define(['application', 'dire/pagination'], function (application) {
     return application
         .controller('system-permission', ['$scope', '$http', '$compile', function ($scope, $http, $compile) {
             var loadGroup = function () {
-                $http.post(CONF.url('permission/glist'), {group: $scope.$stateParams.group})
+                $http.post(CONF.url('permission/gList'))
                     .success(function (json) {
                         dealJson(json, function (json) {
                             $scope.glist = json.data;
@@ -17,9 +17,8 @@ define(['application', 'dire/pagination'], function (application) {
             var loadData = function () {
                 !$scope.activeGroup && ($scope.activeGroup = $scope.glist[0]);
                 $scope.activeGroup.ready = false;
-                $http.post(CONF.url('permission/list'), {
+                $http.post(CONF.url('permission/pList'), {
                     model: $scope.activeGroup.model,
-                    group: $scope.$stateParams.group
                 })
                     .success(function (json) {
                         dealJson(json, function (json) {
@@ -43,11 +42,11 @@ define(['application', 'dire/pagination'], function (application) {
                 $scope.editModel = model;
                 $('body').append($compile('<permission-model data="editModel"></permission-model>')($scope));
             };
-            $scope.remove = function (v) {
-                $('body').append($compile('<ui-confirm data-title="确定要删除么？" on-approve="delete(' + v.id + ')"></ui-confirm>')($scope));
-            };
 
-            $scope.delete = function (id) {
+            $scope.remove = function (id) {
+                if (!confirm("确认删除？")) {
+                    return false;
+                }
                 $http.post(CONF.url('permission/del'), {id: id})
                     .success(function (json) {
                         dealJson(json, loadData);
@@ -73,6 +72,13 @@ define(['application', 'dire/pagination'], function (application) {
                     } else {
                         $scope.action_text = '添加权限';
                     }
+                    $scope.changeStatus = function (data) {
+                        if (data.status == '1') {
+                            data.status = '0';
+                        } else {
+                            data.status = '1';
+                        }
+                    };
                     $scope.submit = function () {
                         $scope.is_submit = true;
                         $http.post(CONF.url('permission/add'), {
@@ -81,7 +87,6 @@ define(['application', 'dire/pagination'], function (application) {
                             action: $scope.data.action,
                             status: $scope.data.status,
                             text: $scope.data.text,
-                            group: $rootScope.$stateParams.group || ''
                         })
                             .success(function (json) {
                                 dealJson(json, function () {
