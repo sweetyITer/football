@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\OrderAddress" table="mall_order_address">
+    <indexes>
+      <index name="fidx_region_country" columns="country"/>
+      <index name="user_address_province" columns="province"/>
+      <index name="fidx_city_id" columns="city"/>
+      <index name="fidx_district" columns="district"/>
+      <index name="fidx_order_id_address" columns="order_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="addressName" type="string" column="address_name" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">地址名称如 公司 家 等等</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="consignee" type="string" column="consignee" length="60" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">收货人的名字</option>
+      </options>
+    </field>
+    <field name="sex" type="string" column="sex" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">0：保密 1：男 2：女</option>
+        <option name="default">unkonw</option>
+      </options>
+    </field>
+    <field name="email" type="string" column="email" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">收货人的email</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="address" type="string" column="address" length="120" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">收货人的详细地址</option>
+      </options>
+    </field>
+    <field name="zipcode" type="string" column="zipcode" length="10" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">收货人的邮编</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="mobile" type="string" column="mobile" length="60" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">收货人的手机</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="signBuilding" type="string" column="sign_building" length="120" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">收货地址的标志性建筑名</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="addTime" type="string" column="add_time" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">改地址添加时间</option>
+      </options>
+    </field>
+    <field name="updateTime" type="datetime" column="update_time" nullable="false">
+      <options>
+        <option name="comment">最后一次修改时间</option>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <many-to-one field="order" target-entity="model\entity\Order" fetch="LAZY">
+      <join-columns>
+        <join-column name="order_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="city" target-entity="model\entity\Region" fetch="LAZY">
+      <join-columns>
+        <join-column name="city" referenced-column-name="region_id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="district" target-entity="model\entity\Region" fetch="LAZY">
+      <join-columns>
+        <join-column name="district" referenced-column-name="region_id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="country" target-entity="model\entity\Region" fetch="LAZY">
+      <join-columns>
+        <join-column name="country" referenced-column-name="region_id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="province" target-entity="model\entity\Region" fetch="LAZY">
+      <join-columns>
+        <join-column name="province" referenced-column-name="region_id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

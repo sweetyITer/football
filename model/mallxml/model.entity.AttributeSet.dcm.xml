@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\AttributeSet" table="mall_attribute_set">
+    <indexes>
+      <index name="cid" columns="cid"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="60" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">属性集名称</option>
+      </options>
+    </field>
+    <field name="addTime" type="string" column="add_time" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">创建时间</option>
+      </options>
+    </field>
+    <many-to-one field="cid" target-entity="model\entity\Category" fetch="LAZY">
+      <join-columns>
+        <join-column name="cid" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\GoodsAttr" table="mall_goods_attr">
+    <indexes>
+      <index name="attr_id" columns="attr_id"/>
+      <index name="fidx_goods_id" columns="goods_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="attrValue" type="string" column="attr_value" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">该具体属性的值</option>
+      </options>
+    </field>
+    <field name="isDelete" type="boolean" column="is_delete" nullable="false">
+      <options>
+        <option name="comment">是否删除 1：已经删除 0：未删除</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <many-to-one field="attr" target-entity="model\entity\Attribute" fetch="LAZY">
+      <join-columns>
+        <join-column name="attr_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="goods" target-entity="model\entity\Goods" fetch="LAZY">
+      <join-columns>
+        <join-column name="goods_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-many field="product" target-entity="model\entity\Product" mapped-by="goodsAttr" fetch="LAZY"/>
+  </entity>
+</doctrine-mapping>

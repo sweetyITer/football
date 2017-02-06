@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="model\entity\Video" table="video">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field column="group_id" name="groupId" type="string" nullable="false">
+            <options>
+                <option name="comment">teach：教学视频 gogoal:gogoalTV game:游戏视频 contest:'赛事视频'</option>
+                <option name="default">teach</option>
+            </options>
+        </field>
+        <field column="cover" name="cover" type="string" length="255" nullable="false">
+            <options>
+            </options>
+        </field>
+        <field column="duration" name="duration" type="integer" nullable="false">
+            <options>
+                <option name="comment">时长</option>
+            </options>
+        </field>
+        <field column="url" name="url" type="string" length="255" nullable="false">
+            <options>
+                <option name="comment">视频地址</option>
+            </options>
+        </field>
+        <field column="title" name="title" type="string" length="60" nullable="false">
+            <options>
+                <option name="comment">视频标题</option>
+            </options>
+        </field>
+        <field column="content" name="content" type="string" length="65535" nullable="false">
+            <options>
+                <option name="comment">视频详情</option>
+            </options>
+        </field>
+        <field column="up_count" name="upCount" type="integer" nullable="false">
+            <options>
+                <option name="comment">点赞次数</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="collect_count" name="collectCount" type="integer" nullable="false">
+            <options>
+                <option name="comment">收藏次数</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="comment_count" name="commentCount" type="integer" nullable="false">
+            <options>
+                <option name="comment">评论次数</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <field column="add_time" name="addTime" type="string" nullable="false">
+            <options>
+                <option name="comment">添加时间</option>
+            </options>
+        </field>
+    </entity>
+</doctrine-mapping>

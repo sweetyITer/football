@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>安心OA管理</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <link href="/css/main.css" rel="stylesheet" type="text/css">
+    <link href="http://cdn.sdxapp.com/libs/tools/bootstrap-3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/bootstrap-daterangepicker/2.1.24/daterangepicker.css" rel="stylesheet"
+          type="text/css">
+    <link href="//cdn.bootcss.com/bootstrap-select/2.0.0-beta1/css/bootstrap-select.min.css" rel="stylesheet">
+    <link href="//cdn.bootcss.com/ajax-bootstrap-select/1.3.8/css/ajax-bootstrap-select.min.css" rel="stylesheet">
+    <link href="//cdn.sdxapp.com/libs/tools/bootstrap-fileinput-4.3.6/css/fileinput.min.css" rel="stylesheet">
+    <link href="//cdn.sdxapp.com/libs/icheck-1.02/skins/square/green.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="./favicon.ico" type="image/x-icon"/>
+    <base href="/">
+</head>
+<style>
+    [ng-cloak] {
+        display: none;
+    }
+    .kv-avatar .file-preview-frame,.kv-avatar .file-preview-frame:hover {
+        margin: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
+        text-align: center;
+    }
+    .kv-avatar .file-input {
+        display: table-cell;
+        max-width: 220px;
+    }
+</style>
+<body ng-cloak="">
+<header init-navbar>
+    <div class="user">
+        <ul class="nav">
+            <li class="dropdown more">
+                <a href="javascript:;" id="logout" title="退出登录" ng-click="logout();">
+                    <span class="glyphicon glyphicon-off"></span>
+                </a>
+            </li>
+            <li>
+                <a href="" class="prompt">
+                    <span class="glyphicon glyphicon-comment"></span>
+                    <small id="notice-count"></small>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <img class="logo" src="http://oa.anxin.chenmm.cn/style/image/logo.png">
+    <ul class="bar nav">
+        <li ng-repeat="n in navlist">
+            <a href="javascript:;" data-value="{{n.list[0].url}}" ng-click="jump(n.list[0].url)" class="parent-nav"
+               ng-class="{active:$state.has(n.url) && ($parent.active.nav=n)}">
+                {{n.text}}
+            </a>
+        </li>
+    </ul>
+</header>
+<div class="container-fluid-sdx">
+    <div class="left-menu">
+        <div class="user">
+            <img ng-src="{{master.user_face}}"/>
+
+            <p>{{master.nick_name}}</p>
+
+            <p><a class="glyphicon glyphicon-cog" href="/"></a>
+                <a class="glyphicon glyphicon-th-large">
+                </a><a class="glyphicon glyphicon-check"></a>
+            </p>
+        </div>
+        <ul class="menu-ul">
+            <li ng-class="{active:$state.has(v.url)}" data-id="{{v.id}}" ng-repeat="v in active.nav.list">
+                <a href="javascript:;" ng-click="jump(v.url)">{{v.text}} </a>
+            </li>
+
+        </ul>
+    </div>
+
+    <div class="main-body" ui-view="">
+    </div>
+    <loading></loading>
+</div>
+<script>
+    VERSION = 1.0;
+</script>
+<script data-main="./js/main.js?v=20161024" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
+</body>
+</html>

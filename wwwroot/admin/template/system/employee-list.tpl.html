@@ -1,0 +1,38 @@
+<div class="ui modal" ui-modal on-approve="submit();" show="false">
+    <i class="close icon"></i>
+    <div class="header">
+        {{action_text}}
+    </div>
+
+    <div class="content">
+        <table class="ui table celled structured ">
+            <thead>
+            <tr>
+                <th width="80">ID</th>
+                <th>姓名</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-if="activeGroup.list.length<=1">
+                <td colspan="10">
+                    空空如也..
+                </td>
+            </tr>
+            <tr ng-repeat="v in data">
+                <td>{{v.id}}</td>
+                <td>{{v.nick_name}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="segment">
+            <pagination total="total" config="pageConfig"></pagination>
+        </div>
+
+    </div>
+    <div class="actions">
+        <div class="ui positive labeled icon button right" >
+            确认
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>

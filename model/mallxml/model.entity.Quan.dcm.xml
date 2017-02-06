@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="model\entity\Quan" table="quan">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field column="`group`" name="group" type="string" nullable="false">
+            <options>
+                <option name="comment">north:华北 south:华南 east:华东 west:华西</option>
+                <option name="default">north</option>
+            </options>
+        </field>
+        <field column="title" name="title" type="string" length="60" nullable="false">
+            <options>
+                <option name="comment">圈名称</option>
+            </options>
+        </field>
+        <field column="icon" name="icon" type="string" length="255" nullable="false">
+            <options>
+                <option name="comment">圈图标地址</option>
+            </options>
+        </field>
+        <field column="follow_count" name="followCount" type="integer" nullable="false">
+            <options>
+                <option name="comment">关注人数</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="post_count" name="postCount" type="integer" nullable="false">
+            <options>
+                <option name="comment">总发帖数量</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="add_time" name="addTime" type="string" nullable="false">
+            <options>
+                <option name="comment">添加时间</option>
+            </options>
+        </field>
+    </entity>
+</doctrine-mapping>

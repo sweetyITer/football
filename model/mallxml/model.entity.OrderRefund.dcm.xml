@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\OrderRefund" table="mall_order_refund">
+    <indexes>
+      <index name="Fk_order_id" columns="order_id"/>
+      <index name="fk_order_goods_id" columns="goods_id"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="out_trade_no" columns="out_trade_no"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="outTradeNo" type="string" column="out_trade_no" length="32" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">退货单号</option>
+      </options>
+    </field>
+    <field name="refundType" type="string" column="refund_type" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">退货类型  1.不退货退款   2.退货退款  3换货   </option>
+        <option name="default">refund_all</option>
+      </options>
+    </field>
+    <field name="refuseReason" type="string" column="refuse_reason" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">不退货理由</option>
+      </options>
+    </field>
+    <field name="refundRemark" type="string" column="refund_remark" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">退款备注</option>
+      </options>
+    </field>
+    <field name="refundMoney" type="decimal" column="refund_money" precision="10" scale="2" nullable="false">
+      <options>
+        <option name="comment">退款金额</option>
+      </options>
+    </field>
+    <field name="status" type="string" column="status" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">状态：已经提交退货 已经审核 正在退货 已经完成 已经驳回</option>
+        <option name="default">applyed</option>
+      </options>
+    </field>
+    <field name="ext" type="string" column="ext" length="1000" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">退货照片</option>
+      </options>
+    </field>
+    <field name="updateTime" type="datetime" column="update_time" nullable="false">
+      <options>
+        <option name="comment">更新时间</option>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <field name="addTime" type="string" column="add_time" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">添加时间</option>
+      </options>
+    </field>
+    <many-to-one field="order" target-entity="model\entity\Order" fetch="LAZY">
+      <join-columns>
+        <join-column name="order_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="goods" target-entity="model\entity\Goods" fetch="LAZY">
+      <join-columns>
+        <join-column name="goods_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

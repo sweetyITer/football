@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="model\entity\User" table="mall_user" repository-class="model\repository\UserRepos">
+        <indexes>
+            <index name="email" columns="email"/>
+            <index name="parent_id" columns="parent_id"/>
+            <index name="phone" columns="phone"/>
+        </indexes>
+        <unique-constraints>
+            <unique-constraint name="user_name" columns="user_name"/>
+        </unique-constraints>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="email" type="string" column="email" length="60" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">会员邮箱</option>
+            </options>
+        </field>
+        <field name="userName" type="string" column="user_name" length="60" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">用户名</option>
+            </options>
+        </field>
+        <field name="nickName" type="string" column="nick_name" length="60" nullable="true">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">昵称</option>
+            </options>
+        </field>
+        <field name="faceImg" type="string" column="face_img" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">用户头像图片地址</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <field name="password" type="string" column="password" length="32" nullable="false">
+            <options>
+                <option name="fixed">1</option>
+                <option name="comment">用户密码</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <field name="sex" type="string" column="sex" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">性别</option>
+                <option name="default">unkonw</option>
+            </options>
+        </field>
+        <field name="money" type="decimal" column="money" precision="10" scale="2" nullable="false">
+            <options>
+                <option name="comment">用户现有资金</option>
+                <option name="default">0.00</option>
+            </options>
+        </field>
+        <field name="addressId" type="integer" column="address_id" nullable="false">
+            <options>
+                <option name="unsigned">1</option>
+                <option name="comment">默认收货地址</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="regTime" type="string" column="reg_time" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">注册时间</option>
+                <option name="default">0000-00-00 00:00:00</option>
+            </options>
+        </field>
+        <field name="lastLogin" type="string" column="last_login" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">最后一次登录时间</option>
+                <option name="default">0000-00-00 00:00:00</option>
+            </options>
+        </field>
+        <field name="updateTime" type="datetime" column="update_time" nullable="true">
+            <options>
+                <option name="comment">最后一次修改时间</option>
+                <option name="default">CURRENT_TIMESTAMP</option>
+            </options>
+        </field>
+        <field name="lastIp" type="string" column="last_ip" length="15" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">最后一次登录ip</option>
+            </options>
+        </field>
+        <field name="loginCount" type="smallint" column="login_count" nullable="false">
+            <options>
+                <option name="unsigned">1</option>
+                <option name="comment">登录次数</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="salt" type="string" column="salt" length="10" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">加密盐值</option>
+            </options>
+        </field>
+        <field name="parentId" type="integer" column="parent_id" nullable="false">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">推荐人会员id，</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="phone" type="string" column="phone" length="11" nullable="true">
+            <options>
+                <option name="fixed">1</option>
+                <option name="comment">手机</option>
+            </options>
+        </field>
+        <field name="guid" type="string" column="guid" length="32" nullable="false">
+            <options>
+                <option name="fixed">1</option>
+                <option name="comment">用户登录唯一id，保证用户同时在一个地点一个机器上登录</option>
+            </options>
+        </field>
+        <field name="isLock" type="boolean" column="is_lock" nullable="false">
+            <options>
+                <option name="comment">账户是否被冻结 1：正常 0：冻结</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="userFrom" type="string" column="user_from" length="20" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">用户来源</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <many-to-many field="goods" target-entity="model\entity\Goods" inversed-by="user" fetch="LAZY">
+            <join-table name="mall_goods_like">
+                <join-columns>
+                    <join-column name="user_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="goods_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

@@ -1,0 +1,34 @@
+<div class="ui modal" ui-modal on-approve="submit();">
+    <i class="close icon"></i>
+    <div class="header">
+        {{action_text}}
+    </div>
+    <div class="content">
+        <div class="ui form">
+            <div class="field">
+                <label for="">昵称</label>
+                <input type="text" ng-model="data.nick_name">
+            </div>
+            <div class="field">
+                <label for="">状态</label>
+                <select ng-model="data.is_lock">
+                    <option value="0">正常</option>
+                    <option value="1">锁定</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="">头像：</label>
+                <img-uploader img-model="data.user_face" params="imgParams"></img-uploader>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            取消
+        </div>
+        <div class="ui positive labeled icon button right" ng-class="{loading:is_submit}">
+            确认
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>

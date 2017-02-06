@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\CouponUser" table="mall_coupon_user">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="couponId" type="integer" column="coupon_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">优惠券id</option>
+      </options>
+    </field>
+    <field name="couponNum" type="string" column="coupon_num" length="12" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">优惠券编号</option>
+      </options>
+    </field>
+    <field name="status" type="integer" column="status" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">优惠券状态 0：未使用  1：已使用 2：已作废</option>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <field name="userId" type="integer" column="user_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">用户id</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="addTime" type="string" column="add_time" nullable="false">
+      <options>
+        <option name="fixed"/>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

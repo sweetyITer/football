@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body ng-app="app" ng-controller="index">
+{{arr1}} <br>
+{{arr2}} <br>
+<hr>
+{{arr3}} <br>
+<hr>
+{{arr4}} <br>
+<hr>
+{{arr5}} <br>
+
+</body>
+<script src="http://cdn.sdxapp.com/libs/tools/angular.min.js?v=1"></script>
+<script>
+    var conbination = function (array, deep) {
+        if (array.length <= 0) {
+            return [];
+        }
+        if (array.length == 1) {
+            if (deep > 0) {
+                return array[0];
+            }
+            var arr = [];
+            angular.forEach(array[0], function (v) {
+                arr.push([v]);
+            });
+            return arr;
+        }
+        var a, b, c = [], tmp;
+        a = array.splice(0, 1)[0];
+        b = array.splice(0, 1)[0];
+        angular.forEach(a, function (aa) {
+            angular.forEach(b, function (bb) {
+                if (deep > 0) {
+                    tmp = angular.copy(aa);
+                    tmp.push(bb);
+                    c.push(tmp);
+                } else {
+                    c.push([aa, bb]);
+                }
+            })
+        });
+        array.splice(0, 0, c);
+        return conbination(array, 1);
+    };
+    angular.module('app', [])
+            .controller('index', function ($scope) {
+
+                $scope.arr1 = ['黄色', '黑色', '黄色'];
+                $scope.arr2 = [31, 34];
+
+                $scope.arr3 = conbination([$scope.arr1, $scope.arr2]);
+                $scope.arr4 = conbination([$scope.arr1]);
+
+                $scope.arr5 = conbination([$scope.arr1, $scope.arr2, [1, 2]]);
+
+            });
+
+</script>
+</html>

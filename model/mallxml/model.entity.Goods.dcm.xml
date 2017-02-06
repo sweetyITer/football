@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="model\entity\Goods" table="mall_goods" repository-class="model\repository\GoodsRepository">
+        <indexes>
+            <index name="shop_price" columns="current_price"/>
+            <index name="add_time" columns="add_time"/>
+            <index name="update_time" columns="update_time"/>
+            <index name="fk_goods_categoryid" columns="cid"/>
+            <index name="fk_goods_brand" columns="brand_id"/>
+            <index name="INDEX_SELECT_0001" columns="is_on_sale,is_delete"/>
+            <index name="FIDX_ATTRIBUTE_SET_ID_GOODS" columns="attribute_set_id"/>
+            <index name="FIDX_COVER_IMGID_GOOD" columns="cover_img_id"/>
+        </indexes>
+        <unique-constraints>
+            <unique-constraint name="goods_sn" columns="goods_sn"/>
+        </unique-constraints>
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field name="goodsSn" type="string" column="goods_sn" length="32" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">商品唯一编码</option>
+            </options>
+        </field>
+        <field name="title" type="string" column="title" length="250" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">商品标题</option>
+            </options>
+        </field>
+        <field name="subTitle" type="string" column="sub_title" length="60" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">短标题</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <field name="brief" type="string" column="brief" length="400" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">简要描述</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <field name="originalPrice" type="decimal" column="original_price" precision="11" scale="2" nullable="false">
+            <options>
+                <option name="comment">市场价格（原价）</option>
+            </options>
+        </field>
+        <field name="currentPrice" type="decimal" column="current_price" precision="11" scale="2" nullable="false">
+            <options>
+                <option name="comment">本店售价（现价）</option>
+            </options>
+        </field>
+        <field name="weight" type="integer" column="weight" nullable="false">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">商品重量</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="transportFee" type="decimal" column="transport_fee" precision="11" scale="2" nullable="false">
+            <options>
+                <option name="comment">运输费用</option>
+                <option name="default">0.00</option>
+            </options>
+        </field>
+        <field name="keywords" type="string" column="keywords" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">商品关键字</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <field name="tagStr" type="string" column="tag_str" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">标签</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <field name="isDelete" type="boolean" column="is_delete" nullable="false">
+            <options>
+                <option name="comment">是否被删除 0: 否 1：是</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="isBest" type="boolean" column="is_best" nullable="false">
+            <options>
+                <option name="comment">是否精品 1：是 0否</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="likeCount" type="integer" column="like_count" nullable="false">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">喜欢数量</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="commentCount" type="integer" column="comment_count" nullable="false">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">商品评论数量</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="soldCount" type="integer" column="sold_count" nullable="false">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">历史售出数量</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="views" type="integer" column="views" nullable="false">
+            <options>
+                <option name="unsigned">1</option>
+                <option name="comment">商品浏览次数</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="note" type="string" column="note" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">商家备注</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <field name="stock" type="integer" column="stock" nullable="false">
+            <options>
+                <option name="unsigned"/>
+                <option name="comment">商品所有库存</option>
+                <option name="default">0</option>
+            </options>
+        </field>
+        <field name="isOnSale" type="boolean" column="is_on_sale" nullable="false">
+            <options>
+                <option name="comment">是否上架 1: 是 0 ：否</option>
+                <option name="default">1</option>
+            </options>
+        </field>
+        <field name="goodsFrom" type="string" column="goods_from" length="255" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">商品来源</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <field name="auditStatus" type="string" column="audit_status" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">商品状态 wait：待审核 audited：已审核 rejected：已经驳回</option>
+                <option name="default">wait</option>
+            </options>
+        </field>
+        <field name="updateTime" type="datetime" column="update_time" nullable="false">
+            <options>
+                <option name="comment">最后一次更新时间</option>
+                <option name="default">CURRENT_TIMESTAMP</option>
+            </options>
+        </field>
+        <field name="addTime" type="string" column="add_time" nullable="false">
+            <options>
+                <option name="fixed"/>
+                <option name="comment">商品添加时间</option>
+            </options>
+        </field>
+        <many-to-one field="attributeSet" target-entity="model\entity\AttributeSet" fetch="LAZY">
+            <join-columns>
+                <join-column name="attribute_set_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="coverImg" target-entity="model\entity\GoodsGallery" fetch="LAZY">
+            <join-columns>
+                <join-column name="cover_img_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="brand" target-entity="model\entity\Brand" fetch="LAZY">
+            <join-columns>
+                <join-column name="brand_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="cid" target-entity="model\entity\Category" fetch="LAZY">
+            <join-columns>
+                <join-column name="cid" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-many field="user" target-entity="model\entity\User" mapped-by="goods" fetch="LAZY"/>
+        <many-to-many field="tag" target-entity="model\entity\Tag" inversed-by="goods" fetch="LAZY">
+            <join-table name="mall_goods_tag">
+                <join-columns>
+                    <join-column name="goods_id" referenced-column-name="id"/>
+                </join-columns>
+                <inverse-join-columns>
+                    <join-column name="tag_id" referenced-column-name="id"/>
+                </inverse-join-columns>
+            </join-table>
+        </many-to-many>
+    </entity>
+</doctrine-mapping>

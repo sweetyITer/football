@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\Order" table="mall_order">
+    <indexes>
+      <index name="user_id" columns="user_id"/>
+      <index name="order_status" columns="order_status"/>
+      <index name="shipping_status" columns="shipping_status"/>
+      <index name="pay_status" columns="pay_status"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="order_sn" columns="order_sn"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="orderSn" type="string" column="order_sn" length="32" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">订单号，唯一</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="shopId" type="integer" column="shop_id" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">供应商id</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="orderStatus" type="string" column="order_status" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">订单状态。wait_confirm，未确认；confirmed，已确认；canceled，已取消；invalid，无效；refuned，退货</option>
+        <option name="default">wait_confirm</option>
+      </options>
+    </field>
+    <field name="shippingStatus" type="string" column="shipping_status" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">商品配送情况，wait:等待配货 prepare:配货中 shipping:已经发货，配送中 received:用户已经签收</option>
+        <option name="default">wait</option>
+      </options>
+    </field>
+    <field name="payStatus" type="string" column="pay_status" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">支付状态；not_pay，未付款；paying，付款中；payed，已付款</option>
+        <option name="default">not_pay</option>
+      </options>
+    </field>
+    <field name="payWay" type="string" column="pay_way" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">用户选择的支付方式的名称，支付宝，微信，其他</option>
+        <option name="default">alipay</option>
+      </options>
+    </field>
+    <field name="goodsAmount" type="decimal" column="goods_amount" precision="10" scale="2" nullable="false">
+      <options>
+        <option name="comment">商品总金额</option>
+        <option name="default">0.00</option>
+      </options>
+    </field>
+    <field name="payFee" type="decimal" column="pay_fee" precision="10" scale="2" nullable="false">
+      <options>
+        <option name="comment">支付费用,跟支付方式的配置相关</option>
+        <option name="default">0.00</option>
+      </options>
+    </field>
+    <field name="createTime" type="string" column="create_time" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">订单生成时间</option>
+        <option name="default">0000-00-00 00:00:00</option>
+      </options>
+    </field>
+    <field name="payTime" type="string" column="pay_time" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">订单支付时间</option>
+        <option name="default">0000-00-00 00:00:00</option>
+      </options>
+    </field>
+    <field name="shippingTime" type="string" column="shipping_time" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">订单配送时间</option>
+        <option name="default">0000-00-00 00:00:00</option>
+      </options>
+    </field>
+    <field name="invoiceName" type="string" column="invoice_name" length="20" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">发货物流名称</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="invoiceNo" type="string" column="invoice_no" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">发货单号，发货时填写，可在订单查询查看</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="userRemark" type="string" column="user_remark" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">订单附言，用户备注</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="adminRemark" type="string" column="admin_remark" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">订单备注 管理员使用 并可以修改</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="isDelete" type="boolean" column="is_delete" nullable="false">
+      <options>
+        <option name="comment">1：已经删除 0：未删除</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <many-to-one field="user" target-entity="model\entity\User" fetch="LAZY">
+      <join-columns>
+        <join-column name="user_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

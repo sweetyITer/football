@@ -1,0 +1,185 @@
+<h3>添加商品</h3>
+<div class="form-horizontal pull-left" role="form" style="width: 100%">
+    <input type="hidden" name="id" value="40" id="id" ng-model="goods.id">
+    <div class="form-group">
+        <label for="title" class="col-sm-2 control-label">标题*</label>
+
+        <div class="col-sm-10">
+            <input type="text" ng-model="goods.title" maxlength="150" class="form-control" id="title" name="title"
+                   placeholder="标题">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="sub_title" class="col-sm-2 control-label">短标题*</label>
+
+        <div class="col-sm-6">
+            <input type="text" maxlength="150" class="form-control" id="sub_title" name="sub_title"
+                   value=""
+                   placeholder="短标题" ng-model="goods.subTitle">
+        </div>
+        <label class="col-sm-1 control-label">商品编码</label>
+        <div class="col-sm-3">
+            <input type="text" maxlength="32" class="form-control" placeholder="商品编码" ng-model="goods.goodsSn">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="brief" class="col-sm-2 control-label">简要描述*</label>
+
+        <div class="col-sm-10">
+            <textarea id="brief" name="brief" maxlength="400" class="form-control" style="height: 80px"
+                      placeholder="商品简要描述，不要超过400个字哦" ng-model="goods.brief">双肩包男女背包大容量书包中学生电脑韩版潮休闲旅游户外包</textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="brand_id" class="col-sm-2 control-label">品牌*</label>
+        <div class="col-sm-4">
+            <select class="selectpicker" name="brand_id" data-live-search="true" id="brand_id" ng-model="goods.brand"
+                    ajax-select=""
+                    config="brandConfig">
+            </select>
+        </div>
+        <label for="cid" class="col-sm-2 control-label">分类*</label>
+
+        <div class="col-sm-4">
+            <select class="selectpicker" name="cid" id="cid" data-live-search="true" ng-model="goods.category"
+                    ajax-select="" config="categoryConfig" ng-change="changeAttributeSet();">
+            </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="keywords" class="col-sm-2 control-label">关键词*</label>
+
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="keywords" id="keywords" value="" ng-model="goods.keywords">
+        </div>
+
+
+    </div>
+    <div class="form-group">
+
+        <label for="market_price" class="col-sm-2 control-label">市场价*</label>
+
+        <div class="col-sm-2">
+            <div class="input-group">
+                <input type="text" id="market_price" class="form-control" value="196.00" ng-model="goods.orginalPrice">
+                <span class="input-group-addon">元</span>
+            </div>
+        </div>
+
+        <label for="shop_price" class="col-sm-2 control-label">
+            本店售价*
+        </label>
+
+        <div class="col-sm-2">
+            <div class="input-group">
+                <input type="text" name="shop_price" value="180.00" class="form-control" id="shop_price"
+                       ng-model="goods.currentPrice">
+                <span class="input-group-addon">元</span>
+            </div>
+        </div>
+        <label for="is_best" class="col-sm-2 control-label">是否精品</label>
+
+        <div class="col-sm-2">
+            <select class="form-control" name="is_best" id="is_best" ng-model="goods.isBest">
+                <option value="false">非精品</option>
+                <option value="true">精品</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label for="note" class="col-sm-2 control-label">备注</label>
+
+        <div class="col-sm-10">
+            <input type="text" maxlength="255" class="form-control" id="note" name="note" placeholder=""
+                   value="" ng-model="goods.note"/>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label">商品图片</label>
+        <div class="col-sm-4">
+            <img ng-src="{{goods.cover | default:'http://cdn.sdxapp.com/images/default.png'}}" alt="..."
+                 class="img-thumbnail">
+        </div>
+        <div class="col-sm-6">
+            <form enctype="multipart/form-data">
+                <input class="file" type="file" config="fileinputConfig" file-input
+                       ng-model="goods.cover">
+            </form>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-sm-2 control-label">多款式 </label>
+        <div class="col-sm-10">
+            <div class="checkbox-inline">
+                <label>
+                    <input type="checkbox" ng-model="goods.isMultipleStyle" ng-checked="goods.isMultipleStyle"
+                           icheck="">
+                    多款式
+                </label>
+            </div>
+
+        </div>
+    </div>
+    <div class="attr-set" ng-show="goods.isMultipleStyle">
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label">属性集</label>
+            <div class="col-sm-10">
+                <select name="" class="form-control" data-live-search="true"
+                        ng-model="goods.attributeSet" ng-options="v.name for v in attrsetList"
+                        ng-change="initAttrTable();">
+                    <option value="">请选择属性集</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group" ng-repeat="attr in goods.attributeSet.list">
+            <label for="" class="col-sm-2 control-label">{{attr.attrName}}</label>
+            <ng-switch on="attr.attrInputType">
+                <div class="col-sm-10" ng-switch-when="select">
+                    <div class="checkbox-inline" ng-repeat="v in attr.valuesArray">
+                        <label>
+                            <input type="checkbox" ng-model="v.checked" ng-checked="v.checked"
+                                   ng-change="initAttrTable();" icheck>
+                            {{v.text}}
+                        </label>
+                    </div>
+                </div>
+            </ng-switch>
+        </div>
+        <div class="form-group">
+            <label for="" class="col-sm-2 control-label">款式信息</label>
+            <div class="col-sm-10">
+                <table class="table-bordered table">
+                    <tr>
+                        <th width="250">款式</th>
+                        <th>货号</th>
+                        <th width="100">库存</th>
+                        <th width="100">差价</th>
+                        <th width="250">款式图片</th>
+                    </tr>
+                    <tr ng-repeat="p in products">
+                        <td> {{p.brief}}</td>
+                        <td><input type="text" class="form-control" ng-model="p.product_sn"></td>
+                        <td><input type="text" class="form-control" ng-model="p.stock"></td>
+                        <td><input type="number" price-format="" class="form-control" ng-model="p.price"></td>
+                        <td class="kv-avatar">
+                            <input class="file file-loading" config="fileinputConfig"  type="file" file-input-avatar="" ng-model="p.img">
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-success btn-large" ng-click="commit();">确定</button>
+            <button type="button" class="btn btn-danger btn-large" ng-click="test();">测试</button>
+        </div>
+    </div>
+</div>

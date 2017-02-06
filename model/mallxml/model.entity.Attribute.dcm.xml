@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\Attribute" table="mall_attribute">
+    <indexes>
+      <index name="FIDX_ATTRIBUTE_SET_ID_ATTR" columns="attribute_set_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="attrName" type="string" column="attr_name" length="60" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">属性名称</option>
+      </options>
+    </field>
+    <field name="attrInputType" type="string" column="attr_input_type" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">当添加商品时，该属性的添加类别；input，为手工输入；select，为选择输入</option>
+        <option name="default">input</option>
+      </options>
+    </field>
+    <field name="attrValues" type="text" column="attr_values" length="65535" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">如果attr_input_type为select，即选择输入，则attr_name对应的值的取值就是该字段的值 逗号分隔</option>
+      </options>
+    </field>
+    <field name="orderNum" type="smallint" column="order_num" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="comment">属性显示的顺序，数字越大越靠前，如果数字一样则按id顺序</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="addTime" type="string" column="add_time" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">添加时间</option>
+      </options>
+    </field>
+    <field name="isDelete" type="boolean" column="is_delete" nullable="false">
+      <options>
+        <option name="comment">状态 0：删除 1：正常</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <many-to-one field="attributeSet" target-entity="model\entity\AttributeSet" fetch="LAZY">
+      <join-columns>
+        <join-column name="attribute_set_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

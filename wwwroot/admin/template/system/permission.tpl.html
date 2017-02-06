@@ -1,0 +1,60 @@
+<ol class="breadcrumb">
+    <li><a href="#">系统</a></li>
+    <li class="active"><a href="#">权限列表</a></li>
+</ol>
+
+<div class="ui pointing secondary menu">
+    <a class="item" ng-class="{active:g.id==activeGroup.id}" ng-repeat="g in glist" ng-click="$parent.activeGroup=g;">{{g.text}}</a>
+    <div class="right menu">
+        <a class="ui item " ng-click="add({model:activeGroup.model})">
+            <i class="ui icon add circle green"></i>添加
+        </a>
+    </div>
+</div>
+<div class="ui tab active" ng-class="{loading:!activeGroup.ready}">
+    <table class="ui table">
+        <thead>
+        <tr>
+            <th width="100">ID</th>
+            <th width="100">模块</th>
+            <th width="100">操作</th>
+            <th>描述</th>
+            <th width="80">状态</th>
+            <th width="280">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-if="activeGroup.list.length<=1">
+            <td colspan="10">
+                空空如也..
+            </td>
+        </tr>
+        <tr ng-repeat="v in activeGroup.list" ng-if="v.action!='*'">
+            <td>{{v.id}}</td>
+            <td>{{v.model}}</td>
+            <td>{{v.action}}</td>
+            <td>{{v.text}}</td>
+            <td>
+                <ng-switch on="v.status">
+                    <i class="icon ui checkmark green" ng-switch-when="1"></i>
+                    <i class="icon ui remove red" ng-switch-when="0"></i>
+                </ng-switch>
+            </td>
+            <td>
+                <button class="ui mini button green" ng-click="add(v)">
+                    <i class="ui icon edit"></i> 修改
+                </button>
+                <button class="ui mini button red" ng-click="remove(v)">
+                    <i class="ui icon trash"></i> 删除
+                </button>
+                <button class="ui mini button blue" ng-click="show(v.id)">
+                    <i class="ui icon user"></i> 员工
+                </button>
+            </td>
+        </tr>
+        <tr ng-if="activeGroup.list.length==0">
+            <td colspan="6">空空如也</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

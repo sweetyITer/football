@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="model\entity\Post" table="post">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field column="title" name="title" type="string" length="100" nullable="false">
+            <options>
+                <option name="comment">帖子标题</option>
+            </options>
+        </field>
+        <field column="content" name="content" type="string" length="65535" nullable="false">
+            <options>
+                <option name="comment">帖子内容</option>
+            </options>
+        </field>
+        <field column="up_count" name="upCount" type="integer" nullable="false">
+            <options>
+                <option name="comment">点赞数</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="collect_count" name="collectCount" type="integer" nullable="false">
+            <options>
+                <option name="comment">收藏数量</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="comment_count" name="commentCount" type="integer" nullable="false">
+            <options>
+                <option name="comment">评论数量</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="is_top" name="isTop" type="integer" nullable="false">
+            <options>
+                <option name="comment">1:置顶 0：不置顶</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="is_intro" name="isIntro" type="integer" nullable="false">
+            <options>
+                <option name="comment">是否推荐 0：否 1：是</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="is_delete" name="isDelete" type="integer" nullable="false">
+            <options>
+                <option name="comment">是否被删除 0：正常 1：已经删除</option>
+                <option name="default"/>
+                <option name="unsigned"/>
+            </options>
+        </field>
+        <field column="add_time" name="addTime" type="string" nullable="false">
+            <options>
+                <option name="comment">发帖时间</option>
+            </options>
+        </field>
+        <many-to-one field="user" target-entity="model\entity\User" fetch="LAZY">
+            <join-columns>
+                <join-column name="user_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="quan" target-entity="model\entity\Quan" fetch="LAZY">
+            <join-columns>
+                <join-column name="quan_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

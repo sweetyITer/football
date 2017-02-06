@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\GoodsDetail" table="mall_goods_detail">
+    <indexes>
+      <index name="IDX_ADD67F5EB7683595" columns="goods_id"/>
+    </indexes>
+    <unique-constraints>
+      <unique-constraint name="goods_id" columns="goods_id,type"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="type" type="string" column="type" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">商品内容类型 pc：pc页面 h5：h5页面</option>
+        <option name="default">pc</option>
+      </options>
+    </field>
+    <field name="cover" type="string" column="cover" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">封面图片id字符串以,间隔</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="content" type="text" column="content" length="65535" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">商品图片视频详情</option>
+      </options>
+    </field>
+    <field name="updateTime" type="datetime" column="update_time" nullable="false">
+      <options>
+        <option name="comment">最后一次修改时间</option>
+        <option name="default">CURRENT_TIMESTAMP</option>
+      </options>
+    </field>
+    <field name="addTime" type="string" column="add_time" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">第一次添加时间</option>
+      </options>
+    </field>
+    <many-to-one field="goods" target-entity="model\entity\Goods" fetch="LAZY">
+      <join-columns>
+        <join-column name="goods_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

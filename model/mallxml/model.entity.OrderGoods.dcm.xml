@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\OrderGoods" table="mall_order_goods">
+    <indexes>
+      <index name="order_id" columns="order_id"/>
+      <index name="goods_id" columns="goods_id"/>
+      <index name="fidx_goods_gallary_img_id" columns="cover_img_id"/>
+      <index name="fidx_product_id_002" columns="product_id"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="attrBrief" type="string" column="attr_brief" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">sku商品款式描述</option>
+      </options>
+    </field>
+    <field name="goodsTitle" type="string" column="goods_title" length="120" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">商品的名称(购买的时候)之后变了无效</option>
+      </options>
+    </field>
+    <field name="buyCount" type="smallint" column="buy_count" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="comment">商品的购买数量</option>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <field name="orginalPrice" type="decimal" column="orginal_price" precision="10" scale="2" nullable="false">
+      <options>
+        <option name="comment">商品的市场售价原价</option>
+        <option name="default">0.00</option>
+      </options>
+    </field>
+    <field name="currentPrice" type="decimal" column="current_price" precision="10" scale="2" nullable="false">
+      <options>
+        <option name="comment">商品的本店售价</option>
+        <option name="default">0.00</option>
+      </options>
+    </field>
+    <field name="isReal" type="boolean" column="is_real" nullable="false">
+      <options>
+        <option name="comment">是否是实物，0，否；1，是；取值ecs_goods </option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="addTime" type="string" column="add_time" nullable="true">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">添加时间</option>
+      </options>
+    </field>
+    <many-to-one field="coverImg" target-entity="model\entity\GoodsGallery" fetch="LAZY">
+      <join-columns>
+        <join-column name="cover_img_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="product" target-entity="model\entity\Product" fetch="LAZY">
+      <join-columns>
+        <join-column name="product_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="goods" target-entity="model\entity\Goods" fetch="LAZY">
+      <join-columns>
+        <join-column name="goods_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="order" target-entity="model\entity\Order" fetch="LAZY">
+      <join-columns>
+        <join-column name="order_id" referenced-column-name="id"/>
+      </join-columns>
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

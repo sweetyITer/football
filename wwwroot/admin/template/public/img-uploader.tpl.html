@@ -1,0 +1,13 @@
+<div class="uploader">
+    <div class="segment ui" ng-if="imgModel">
+        <div class="ui cards six">
+            <a class="card green">
+                <div class="image">
+                    <img class="ui small image" ng-src="{{imgThumb}}">
+                </div>
+            </a>
+        </div>
+    </div>
+    <input type="file" style="display: none;">
+    <button type="button" class="ui button green" ng-click="choose();">选择图片</button>
+</div>

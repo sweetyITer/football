@@ -1,0 +1,79 @@
+<div class="address">
+    <div class="route">
+        <ul>
+            <li class="link">
+                <a href="javascript:;"> 商品管理 </a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="action">
+        <ul>
+            <li class="">
+                <a href="javascript:;" ui-sref="goods/add"> 添加商品 </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="filter clearfix">
+    <div class="filter-search-form">
+        <div class="button">
+            <button type="button" id="goods-search">搜索</button>
+        </div>
+        <div class="input">
+            <input type="text" placeholder="输入商品标题或者商品id进行搜索" id="goods-search-value" value="">
+        </div>
+    </div>
+</div>
+<div class="mbox-list">
+    <div class="mbox" ng-repeat="g in list">
+        <dl class="tuijian-data">
+            <dd class="title">
+                <span>[ID:{{g.id}}]</span> {{g.title}}
+            </dd>
+            <dt class="goods-img">
+                <img ng-src="{{g.coverImg}}">
+            </dt>
+            <dd class="goods-text text">
+                <p>
+                    <span>市场价格：</span>{{g.orginalPrice | currency:"￥"}} <span>本店价格：</span>{{g.currentPrice |
+                    currency:"￥"}}
+                    <span>库存：</span> {{g.stock}}
+                </p>
+
+                <P>
+                    <span>简要描述：</span>{{g.brief}}
+                </P>
+            </dd>
+
+            <dd class="status"
+                ng-class="{off:g.isDelete  || !g.isOnSale,on:!(g.isDelete || !g.isOnSale)}">
+                <span ng-if="g.isDelete">已删除</span>
+                <span ng-if="!g.isDelete && g.isOnSale">已上架</span>
+                <span ng-if="g.isDelete || !g.isOnSale">已下架</span>
+            </dd>
+        </dl>
+        <div class="tools grey">
+            <a ui-sref="goods/add({id:g.id})" class="tool-btn edit">
+                修改
+            </a>
+            <a ng-if="g.isOnSale==0" href="javascript:;" class="tool-btn off-sale" ng-click="onsale()">
+                上架
+            </a>
+            <a ng-if="g.isOnSale==1" href="javascript:;" class="tool-btn off-sale" ng-click="offsale();">
+                下架
+            </a>
+            <a href="javascript:;" class="tool-btn del">
+                删除
+            </a>
+            <span class="pull-right"
+                  title="最后修改时间：{{g.updateTime}}">{{g.updateTime|date2str}}</span>
+        </div>
+    </div>
+    <div class="mbox" ng-if="list.length==0">
+        <dl class="last">
+            <dt>空空如也..</dt>
+        </dl>
+    </div>
+</div>
+<pagination config="pageConfig" total="totalCount"></pagination>

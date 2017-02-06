@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\Tag" table="mall_tag">
+    <unique-constraints>
+      <unique-constraint name="text" columns="text"/>
+    </unique-constraints>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="text" type="string" column="text" length="50" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">标签名称</option>
+      </options>
+    </field>
+    <field name="useCount" type="integer" column="use_count" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">使用次数</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="addTime" type="string" column="add_time" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">添加时间</option>
+        <option name="default">0000-00-00 00:00:00</option>
+      </options>
+    </field>
+    <many-to-many field="goods" target-entity="model\entity\Goods" mapped-by="tag" fetch="LAZY"/>
+  </entity>
+</doctrine-mapping>

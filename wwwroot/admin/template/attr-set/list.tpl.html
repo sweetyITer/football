@@ -1,0 +1,43 @@
+<div class="address">
+    <div class="route">
+        <ul>
+            <li class="link">
+                <a href="javascript:;"> 属性集管理 </a>
+            </li>
+
+        </ul>
+    </div>
+    <div class="action">
+        <ul>
+            <li class="">
+                <a href="javascript:;" ui-sref="goods/attr-set-add"> 添加属性集 </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<br>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th width="80">ID</th>
+        <th>名称</th>
+        <th width="250">添加时间</th>
+        <th width="250">操作</th>
+    </tr>
+
+    <tr ng-repeat="a in list">
+        <td>{{a.id}}</td>
+        <td>{{a.name}}</td>
+        <td>{{a.addTime|date2str}}</td>
+        <td>
+            <a href="javascript:;" ui-sref="goods/attr-set-add({id:a.id})">
+                <span class="glyphicon glyphicon-edit"></span>
+                编辑
+            </a>
+        </td>
+    </tr>
+    <tr ng-if="list.length ==0 ">
+        <td colspan="5">空空如也..</td>
+    </tr>
+</table>
+
+<pagination config="pageConfig" total="totalCount"></pagination>

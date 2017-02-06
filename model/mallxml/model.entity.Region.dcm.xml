@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\Region" table="mall_region">
+    <indexes>
+      <index name="parent_id" columns="parent_id"/>
+      <index name="region_type" columns="region_type"/>
+      <index name="agency_id" columns="agency_id"/>
+    </indexes>
+    <id name="regionId" type="smallint" column="region_id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="parentId" type="smallint" column="parent_id" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="regionName" type="string" column="region_name" length="120" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="regionType" type="smallint" column="region_type" nullable="false">
+      <options>
+        <option name="default">2</option>
+      </options>
+    </field>
+    <field name="agencyId" type="smallint" column="agency_id" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="status" type="boolean" column="status" nullable="false">
+      <options>
+        <option name="comment">是否支持该地区</option>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <field name="orderNum" type="smallint" column="order_num" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">地区顺序 从小到大排列</option>
+        <option name="default">1000</option>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>

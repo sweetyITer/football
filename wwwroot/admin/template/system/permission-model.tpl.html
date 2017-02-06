@@ -1,0 +1,40 @@
+<div class="ui modal" ui-modal on-approve="submit();">
+    <i class="close icon"></i>
+    <div class="header">
+        {{action_text}}
+    </div>
+    <div class="content">
+        <div class="ui form">
+            <div class="ui field">
+                <label for="">模块</label>
+                <input type="text" ng-model="data.model">
+                <input type="hidden" ng-model="data.id">
+            </div>
+            <div class="ui field">
+                <label for="">操作</label>
+                <input type="text" ng-model="data.action">
+            </div>
+            <div class="ui field">
+                <label for="">描述</label>
+                <input type="text" ng-model="data.text">
+            </div>
+            <div class="ui field">
+                <label for="">状态</label>
+                <div class="ui slider checkbox green" ui-checkbox="" on-checked="data.status=1"
+                     on-unchecked="data.status=0" checked="data.status==1">
+                    <input type="checkbox">
+                    <label for="">开启/关闭</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="actions">
+        <div class="ui black deny button">
+            取消
+        </div>
+        <div class="ui positive labeled icon button right" ng-class="{loading:is_submit}">
+            确认
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>

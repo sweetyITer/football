@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+    <entity name="model\entity\VideoComment" table="video_comment">
+        <id name="id" type="integer" column="id">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <field column="content" name="content" type="string" length="500" nullable="false">
+            <options>
+                <option name="comment">评论内容</option>
+            </options>
+        </field>
+        <field column="add_time" name="addTime" type="string" nullable="false">
+            <options>
+                <option name="comment">评论时间</option>
+            </options>
+        </field>
+        <field column="up_count" name="upCount" type="integer" nullable="false">
+            <options>
+                <option name="comment">该评论点赞数量</option>
+                <option name="default"/>
+            </options>
+        </field>
+        <many-to-one field="user" target-entity="model\entity\User" fetch="LAZY">
+            <join-columns>
+                <join-column name="user_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+        <many-to-one field="video" target-entity="model\entity\Video" fetch="LAZY">
+            <join-columns>
+                <join-column name="video_id" referenced-column-name="id"/>
+            </join-columns>
+        </many-to-one>
+    </entity>
+</doctrine-mapping>

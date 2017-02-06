@@ -1,0 +1,31 @@
+{
+    "name": "chenmingming/football",
+    "description": "football",
+    "authors": [
+        {
+            "name": "chenmingming",
+            "email": "mingming0929@139.com"
+        }
+    ],
+    "require": {
+        "mmxs/mmapi": "dev-master",
+        "aliyuncs/oss-sdk-php": "^2.2",
+        "guzzlehttp/guzzle": "^6.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": [
+                "app/"
+            ],
+            "model\\": [
+                "model/"
+            ],
+            "library\\": [
+                "library/"
+            ]
+        }
+    }
+}

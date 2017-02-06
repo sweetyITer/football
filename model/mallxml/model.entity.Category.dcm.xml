@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="model\entity\Category" table="mall_category">
+    <indexes>
+      <index name="parent_id" columns="pid"/>
+      <index name="order_num" columns="order_num"/>
+    </indexes>
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="name" type="string" column="name" length="90" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">分类名称</option>
+      </options>
+    </field>
+    <field name="brief" type="string" column="brief" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">分类描述</option>
+      </options>
+    </field>
+    <field name="cover" type="string" column="cover" length="255" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">分类图片</option>
+        <option name="default"/>
+      </options>
+    </field>
+    <field name="pid" type="integer" column="pid" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="comment">该分类的父id，取值于该表的id字段</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="rid" type="integer" column="rid" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="comment">根节点id</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="orderNum" type="smallint" column="order_num" nullable="false">
+      <options>
+        <option name="unsigned">1</option>
+        <option name="comment">该分类在页面显示的顺序，数字越大顺序越靠后；同数字，id在前的先显示</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="measureUnit" type="string" column="measure_unit" length="15" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">该分类的计量单位</option>
+      </options>
+    </field>
+    <field name="isShow" type="boolean" column="is_show" nullable="false">
+      <options>
+        <option name="comment">是否在前台页面显示，1，显示；0，不显示</option>
+        <option name="default">1</option>
+      </options>
+    </field>
+    <field name="goodsCount" type="integer" column="goods_count" nullable="false">
+      <options>
+        <option name="unsigned"/>
+        <option name="comment">该分类下商品数量</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="isDelete" type="boolean" column="is_delete" nullable="false">
+      <options>
+        <option name="comment">是否删除 1:已经删除 0：未删除</option>
+        <option name="default">0</option>
+      </options>
+    </field>
+    <field name="addTime" type="string" column="add_time" nullable="false">
+      <options>
+        <option name="fixed"/>
+        <option name="comment">添加时间</option>
+      </options>
+    </field>
+  </entity>
+</doctrine-mapping>
