@@ -66,11 +66,17 @@ define(['application'], function (application) {
                 controllerUrl: 'ctrl/attr-set/add',
                 controller: 'attr-set-add'
             })
-            .state('goods/banner', {
-                url: '/goods/banner.html?id',
-                templateUrl: CONF.tpl('goods/banner'),
-                controllerUrl: 'ctrl/goods/banner',
-                controller: 'goods-banner'
+            .state('zbl/add', {
+                url: '/zbl/add.html?id',
+                templateUrl: CONF.tpl('zbl/add'),
+                controllerUrl: 'ctrl/zbl/add',
+                controller: 'zbl-add'
+            })
+            .state('zbl/list', {
+                url: '/zbl/list.html?p',
+                templateUrl: CONF.tpl('zbl/list'),
+                controllerUrl: 'ctrl/zbl/list',
+                controller: 'zbl-list'
             })
 
 
