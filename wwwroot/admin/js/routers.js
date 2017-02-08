@@ -66,6 +66,12 @@ define(['application'], function (application) {
                 controllerUrl: 'ctrl/attr-set/add',
                 controller: 'attr-set-add'
             })
+            .state('goods/banner', {
+                url: '/goods/banner.html?id',
+                templateUrl: CONF.tpl('goods/banner'),
+                controllerUrl: 'ctrl/goods/banner',
+                controller: 'goods-banner'
+            })
 
 
         $locationProvider.html5Mode(true).hashPrefix('!');

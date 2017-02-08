@@ -26,7 +26,11 @@ class test extends DenyResubmitApi
 
     public function run()
     {
-        $this->set('dsdsd', 222);
+        $obj = new ModelXmlBuilder();
+        $obj->setDb(Db::create())->setNamespace('model\entity');
+        $obj
+            ->setTableName('zbl_intro_module')
+            ->builder(VPATH . '/model/xml/');
     }
 
 }
