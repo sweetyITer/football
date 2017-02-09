@@ -1,6 +1,6 @@
 <h3>添加推荐位</h3>
 <div class="form-horizontal pull-left" role="form" style="width: 100%">
-    <input type="hidden" name="id" value="40" id="id" ng-model="goods.id">
+    <!--<input type="hidden" name="id" value="40" id="id" ng-model="goods.id">-->
     <div class="form-group">
         <label for="title" class="col-sm-2 control-label">标题*</label>
         <div class="col-sm-10">
@@ -12,8 +12,8 @@
         <label for="type" class="col-sm-2 control-label">推荐位类型*</label>
         <div class="col-sm-2">
             <select class="form-control" name="type" data-live-search="true" id="type"
-                    ng-model="zbl.type_select"
-                    ng-options="v.name for v in types">
+                    ng-model="tpv.type_select"
+                    ng-options="v.name for v in types" ng-change="typeChange(tpv)">
             </select>
         </div>
         <label for="order_num" class="col-sm-2 control-label">顺序*</label>
@@ -22,19 +22,66 @@
                    name="order_num">
         </div>
     </div>
-    <div class="form-group">
-        <label for="" class="col-sm-2 control-label">商品图片</label>
-        <div class="col-sm-4">
-            <img ng-src="{{zbl.content.cover | default:'http://cdn.sdxapp.com/images/default.png'}}" alt="..."
-                 class="img-thumbnail">
+    <div ng-repeat="v in content">
+        <div class="form-group" ng-show="state==1">
+            <label for="" class="col-sm-2 control-label">推荐位图片</label>
+            <div class="col-sm-4">
+                <img ng-src="{{v.cover | default:'http://cdn.sdxapp.com/images/default.png'}}" alt="..."
+                     class="img-thumbnail">
+            </div>
+            <div class="col-sm-6">
+                <form enctype="multipart/form-data">
+                    <input class="file" type="file" config="fileinputConfig" file-input
+                           ng-model="v.cover">
+                </form>
+            </div>
         </div>
-        <div class="col-sm-6">
-            <form enctype="multipart/form-data">
-                <input class="file" type="file" config="fileinputConfig" file-input
-                       ng-model="zbl.content.cover">
-            </form>
+        <div class="form-group">
+            <label for="url" class="col-sm-2 control-label" ng-show="state==1">图片转链地址*</label>
+            <div class="col-sm-3" ng-show="state==1">
+                <input type="url" ng-model="v.url" class="form-control" placeholder="图片转链地址" id="url"
+                       name="url">
+            </div>
+            <label for="price" class="col-sm-2 control-label" ng-show="status==1">价格*</label>
+            <div class="col-sm-3">
+                <input type="url" ng-model="v.price" class="form-control" placeholder="价格" id="price"
+                       ng-show="status==1"
+                       name="text">
+            </div>
+        </div>
+        <div class="form-group" ng-show="status==1">
+            <label for="heading" class="col-sm-2 control-label">标题*</label>
+            <div class="col-sm-10">
+                <input type="text" ng-model="v.heading" maxlength="150" class="form-control" id="heading"
+                       name="heading"
+                       placeholder="标题">
+            </div>
+        </div>
+        <div class="form-group" ng-show="status==1">
+            <label for="heading_url" class="col-sm-2 control-label">标题转链地址*</label>
+            <div class="col-sm-10">
+                <input type="text" ng-model="v.heading_url" maxlength="150" class="form-control"
+                       id="heading_url" name="heading_url"
+                       placeholder="标题转链地址">
+            </div>
         </div>
     </div>
+    <div ng-repeat="x in keywords" ng-show="status==1">
+        <div class="form-group">
+            <label for="keyword" class="col-sm-2 control-label">关键字*</label>
+            <div class="col-sm-3">
+                <input type="url" ng-model="x.keyword" class="form-control" placeholder="图片转链地址" id="keyword"
+                       name="keyword">
+            </div>
+            <label for="keyword_url" class="col-sm-2 control-label">关键字转链地址*</label>
+            <div class="col-sm-3">
+                <input type="url" ng-model="x.keyword_url" class="form-control" placeholder="关键字转链地址"
+                       id="keyword_url"
+                       name="text">
+            </div>
+        </div>
+    </div>
+    >
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="button" class="btn btn-success btn-large" ng-click="commit();">确定</button>
