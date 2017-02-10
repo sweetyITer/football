@@ -16,7 +16,7 @@ return [
         'status'      => true,
         'time_format' => ' Y-m-d H:i:s ',
         'togbk'       => true,
-        'filepath'    => '/dev/shm/football_wangjuan.cutlog',
+        'filepath'    => '/dev/shm/football_zhuleifeng.cutlog',
         'color'       => [
             'sql'   => \mmapi\log\File::COLOR_GREY,
             'error' => \mmapi\log\File::COLOR_RED,

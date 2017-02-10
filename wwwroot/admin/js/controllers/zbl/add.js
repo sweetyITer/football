@@ -3,6 +3,7 @@
  */
 define(['application', 'angular', 'fileinput', 'ajax-bootstrap-select', 'icheck'], function (application) {
     application.controller('zbl-add', ['$scope', '$http', function ($scope, $http) {
+        $scope.zbl = {};
         $scope.types = [{name: '4图片推荐位', type: 'img-4'},
             {name: '广告推荐位', type: 'img-banner'},
             {name: '商品推荐位', type: 'banner'},
@@ -13,10 +14,11 @@ define(['application', 'angular', 'fileinput', 'ajax-bootstrap-select', 'icheck'
             maxFileSize: 2000000,
             maxFilesNum: 1
         };
-        $scope.content = [{}];
-        $scope.keywords = [{}];
         $scope.typeChange = function (tpv) {
-            console.log(tpv);
+            $scope.imgInfo = [{}];
+            $scope.keywords = [{}];
+            $scope.state = 0;
+            $scope.status = 0;
             if (tpv.type_select) {
                 if (tpv.type_select.type == 'img-4') {
                     $scope.addContent(3);
@@ -36,40 +38,31 @@ define(['application', 'angular', 'fileinput', 'ajax-bootstrap-select', 'icheck'
         };
         $scope.addContent = function (num) {
             for (var i = 0; i < num; i++) {
-                $scope.content.push({
-                    'url': '',
-                    'cover': '',
-                    'heading': '',
-                    'heading_url': '',
-                    'price': ''
-                })
+                $scope.imgInfo.push({})
             }
         };
         $scope.addKetword = function (num) {
             for (var i = 0; i < num; i++) {
-                $scope.keywords.push({
-                    'keyword': '',
-                    'keyword_url': '',
-                })
+                $scope.keywords.push({})
             }
         };
         $scope.commit = function () {
-            console.log($scope.tpv.type_select.type);
             $scope.zbl.type = $scope.tpv.type_select.type;
-            $scope.zbl.content = [
-                {'img_info': $scope.conetent},
-                {'keyword': $scope.keywords}
-            ];
-            console.log($scope.zbl);
-            /* $http.post(CONF.url('zbl/add'), $scope.zbl)
-             .success(function (json) {
-             dealJson(json, function (json) {
-             /!*if (!$scope.$stateParams.id) {
-             $scope.$state.go('.', {id: json.data.id});
-             }*!/
-             tip('提交成功');
-             })
-             })*/
+            if ($scope.zbl.type = 'banner') {
+                $scope.zbl.content = [
+                    {'img_info': $scope.imgInfo},
+                    {'keyword': $scope.keywords}
+                ];
+            } else {
+                $scope.zbl.content = [{'img_info': $scope.imgInfo}];
+            }
+            console.log($scope.zbl.content);
+            $http.post(CONF.url('zbl/add'), $scope.zbl)
+                .success(function (json) {
+                    dealJson(json, function (json) {
+                        tip('提交成功');
+                    })
+                })
         }
     }])
 });

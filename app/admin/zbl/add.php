@@ -6,7 +6,7 @@
  * Time: 20:18
  */
 
-namespace app\admin\attrset;
+namespace app\admin\zbl;
 
 use app\AdminApi;
 use mmapi\core\Api;
@@ -16,7 +16,7 @@ use mmapi\core\Db;
 use model\entity\Attribute;
 use model\entity\AttributeSet;
 use model\entity\Category;
-use model\entity\ZblIntro;
+use model\entity\ZblIntroModule;
 
 class add extends AdminApi
 {
@@ -33,22 +33,21 @@ class add extends AdminApi
         $this->addParam('type');
         $this->addParam('orderNum')->setType(ApiParams::TYPE_INT);
         $this->addParam('isOpen');
-        $this->addParam('isOpen');
-        $this->addParam('content')->setType(ApiParams::TYPE_STRING);
+        $this->addParam('content')->setType(ApiParams::TYPE_ARRAY);
         $this->addParam('isDelete')->setType(ApiParams::TYPE_STRING)->setRequire(false)->setDefault(false);
-        $this->denyResubmit();
+        /*$this->denyResubmit();*/
     }
 
     public function run()
     {
-        $zblObj = new ZblIntro();
+        $content = json_encode($this->content);
+        $zblObj  = new ZblIntroModule();
         $zblObj
             ->setTitle($this->title)
             ->setType($this->type)
             ->setOrderNum($this->orderNum)
             ->setIsOpen($this->isOpen)
-            ->setContent($this->content)
-            ->setIsDelete($this->isDelete)
+            ->setContent($content)
             ->save();
     }
 }

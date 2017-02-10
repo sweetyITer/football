@@ -6,9 +6,9 @@ use mmapi\core\Model;
 use mmapi\core\Db;
 
 /**
- * ZblIntro
+ * ZblIntroModule
  */
-class ZblIntro extends Model
+class ZblIntroModule extends Model
 {
     /**
      * @var integer
@@ -33,7 +33,7 @@ class ZblIntro extends Model
     /**
      * @var boolean
      */
-    private $isOpen;
+    private $isOpen = 0;
 
     /**
      * @var string
@@ -50,12 +50,17 @@ class ZblIntro extends Model
      */
     private $addTime;
 
+    public function __construct()
+    {
+        $this->addTime = date('Y-m-d H:i:s');
+    }
+
     /**
      * Set title
      *
      * @param string $title
      *
-     * @return ZblIntro
+     * @return ZblIntroModule
      */
     public function setTitle($title)
     {
@@ -79,7 +84,7 @@ class ZblIntro extends Model
      *
      * @param string $type
      *
-     * @return ZblIntro
+     * @return ZblIntroModule
      */
     public function setType($type)
     {
@@ -103,7 +108,7 @@ class ZblIntro extends Model
      *
      * @param integer $orderNum
      *
-     * @return ZblIntro
+     * @return ZblIntroModule
      */
     public function setOrderNum($orderNum)
     {
@@ -127,11 +132,11 @@ class ZblIntro extends Model
      *
      * @param boolean $isOpen
      *
-     * @return ZblIntro
+     * @return ZblIntroModule
      */
     public function setIsOpen($isOpen)
     {
-        $this->isOpen = $isOpen == true;
+        $this->isOpen = $isOpen == 'true' ? 1 : 0;
 
         return $this;
     }
@@ -151,7 +156,7 @@ class ZblIntro extends Model
      *
      * @param string $content
      *
-     * @return ZblIntro
+     * @return ZblIntroModule
      */
     public function setContent($content)
     {
@@ -175,7 +180,7 @@ class ZblIntro extends Model
      *
      * @param boolean $isDelete
      *
-     * @return ZblIntro
+     * @return ZblIntroModule
      */
     public function setIsDelete($isDelete)
     {
@@ -199,7 +204,7 @@ class ZblIntro extends Model
      *
      * @param string $addTime
      *
-     * @return ZblIntro
+     * @return ZblIntroModule
      */
     public function setAddTime($addTime)
     {

@@ -22,7 +22,7 @@
                    name="order_num">
         </div>
     </div>
-    <div ng-repeat="v in content">
+    <div ng-repeat="v in imgInfo track by $index">
         <div class="form-group" ng-show="state==1">
             <label for="" class="col-sm-2 control-label">推荐位图片</label>
             <div class="col-sm-4">
@@ -39,7 +39,7 @@
         <div class="form-group">
             <label for="url" class="col-sm-2 control-label" ng-show="state==1">图片转链地址*</label>
             <div class="col-sm-3" ng-show="state==1">
-                <input type="url" ng-model="v.url" class="form-control" placeholder="图片转链地址" id="url"
+                <input type="text" ng-model="v.url" class="form-control" placeholder="图片转链地址" id="url"
                        name="url">
             </div>
             <label for="price" class="col-sm-2 control-label" ng-show="status==1">价格*</label>
@@ -66,26 +66,19 @@
             </div>
         </div>
     </div>
-    <div ng-repeat="x in keywords" ng-show="status==1">
+    <div ng-repeat="x in keywords track by $index" ng-show="status==1">
         <div class="form-group">
             <label for="keyword" class="col-sm-2 control-label">关键字*</label>
             <div class="col-sm-3">
-                <input type="url" ng-model="x.keyword" class="form-control" placeholder="图片转链地址" id="keyword"
+                <input type="text" ng-model="x.keyword" class="form-control" placeholder="关键字" id="keyword"
                        name="keyword">
             </div>
             <label for="keyword_url" class="col-sm-2 control-label">关键字转链地址*</label>
             <div class="col-sm-3">
-                <input type="url" ng-model="x.keyword_url" class="form-control" placeholder="关键字转链地址"
+                <input type="text" ng-model="x.keyword_url" class="form-control" placeholder="关键字转链地址"
                        id="keyword_url"
-                       name="text">
+                       name="keyword_url">
             </div>
-        </div>
-    </div>
-    >
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <button type="button" class="btn btn-success btn-large" ng-click="commit();">确定</button>
-            <button type="button" class="btn btn-danger btn-large" ng-click="test();">测试</button>
         </div>
     </div>
     <div class="form-group">
@@ -97,4 +90,10 @@
             </select>
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" class="btn btn-success btn-large" ng-click="commit();">确定</button>
+        </div>
+    </div>
+
 </div>
